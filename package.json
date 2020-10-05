@@ -1,0 +1,43 @@
+{
+  "name": "vue-highlight-code",
+  "version": "1.0.0",
+  "description": "Single Page Application with Vue js ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "development": "webpack-dev-server --open --watch",
+    "dev": "npm run development",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/adjiekrazz/vue-highlight-code.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adjiekrazz/vue-highlight-code/issues"
+  },
+  "homepage": "https://github.com/adjiekrazz/vue-highlight-code#readme",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.11.5",
+    "axios": "^0.20.0",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^4.3.0",
+    "file-loader": "^6.1.0",
+    "html-webpack-plugin": "^4.5.0",
+    "vue": "^2.6.12",
+    "vue-loader": "^15.9.3",
+    "vue-meta": "^2.4.0",
+    "vue-router": "^3.4.5",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.12",
+    "vuex": "^3.5.1",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {}
+}
