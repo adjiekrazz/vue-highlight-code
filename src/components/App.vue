@@ -1,6 +1,5 @@
 <template>
     <div id="app">
-        {{ messages }}
         <transition name="page" mode="out-in">
             <component :is="layout" v-if="layout" />
         </transition>
@@ -16,7 +15,6 @@ export default {
     },
     data: () => ({
         layout: defaultLayout,
-        messages: 'Hello App.vue'
     })
 }
 </script>

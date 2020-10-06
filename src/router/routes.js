@@ -3,5 +3,6 @@ function page (name) {
 }
 
 export default [
-    { path: '/', name: 'home', component: page('home')}
+    { path: '/upload', name: 'upload', component: page('upload') },
+    { path: '/paste', name: 'paste', component: page('paste') }
 ]
