@@ -1,46 +1,165 @@
 <template>
     <div class="">
         <b-card>
-            <b-row>
-                <b-col cols="12" md="6">
-                    <b-form-group label="Pilih Bahasa Pemrograman :">
-                        <b-form-select
-                            v-model="userInput.selectedLanguage"
-                            :options="languages"
-                            size="md"
-                        ></b-form-select>
-                    </b-form-group>
-                </b-col>
-            </b-row>
-            <b-row>
-                <b-col cols="12" md="6">
-                    <b-form-group label="Upload file :">
-                        <b-form-file
-                            v-model="userInput.fileName"
-                            placeholder="contoh : index.ts"
-                        ></b-form-file>
-                    </b-form-group>
-                </b-col>
-            </b-row>
+            <b-form @submit="formSubmit" @reset="formReset" v-if="formShow">
+                <b-row>
+                    <b-col cols="12" lg="6">
+                        <b-form-group label="Pilih Bahasa Pemrograman :">
+                            <b-form-select
+                                v-model="form.lang"
+                                :options="langOptions"
+                                size="md"
+                                required
+                            ></b-form-select>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col cols="12" lg="6">
+                        <b-form-group label="Upload file :">
+                            <b-form-input
+                                v-model="form.fileName"
+                                :state="Boolean(form.fileName)"
+                                placeholder="contoh : index.ts"
+                                required
+                            ></b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row v-if="form.lang == 'typescript' || form.lang == 'json'">
+                    <b-col cols="12" lg="6">
+                        <b-form-group label="Opsi :">
+                            <b-form-select
+                                v-model="form.twoslash"
+                                :options="tsOptions"
+                                size="md"
+                            ></b-form-select>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col cols="12" lg="6">
+                        <b-form-group label="Unduh ?">
+                            <b-form-radio v-model="form.download" name="true" value="1">Ya</b-form-radio>
+                            <b-form-radio v-model="form.download" name="false" value="0">Tidak</b-form-radio>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col cols="12" lg="6">
+                        <b-form-group label="Baris yang disorot : ">
+                            <b-form-input
+                                v-model="form.highlight"
+                                placeholder="misal : 1, atau 2-4"
+                                required
+                            ></b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col cols="12">
+                        <b-form-group label="Masukkan Kode :">
+                            <b-form-textarea
+                                v-model="form.code"
+                                rows="3"
+                                max-rows="3"
+                                placeholder="example : console.log('@adjiekrazz')"
+                            ></b-form-textarea>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col cols="12" lg="6">
+                        <b-button type="submit" block variant="primary">
+                            Proses
+                        </b-button>
+                    </b-col>
+                </b-row>
+            </b-form>
+        </b-card>
+        <b-card bg-variant="light" class="mt-3" v-if="responseApi.status === 200">
+            <b-card-text>
+                <span v-html="responseApi.data.data"></span>
+            </b-card-text>
         </b-card>
     </div>
 </template>
 <script>
 export default {
     data: () => ({
-        userInput: {
-            selectedLanguage: '',
-            fileName: null,
+        form: {
+            lang: '',
+            fileName: '',
+            highlight: '',
+            twoslash: 'twoslash',
+            download: 0,
+            code: ''
         },
-        languages: []
+        formShow: true,
+        langOptions: [],
+        tsOptions: ['twoslash', 'tsconfig'],
+        responseApi: {
+            status: '',
+            data: ''
+        }
     }),
     mounted () {
         this.getLanguages()
+        console.log(this.urlBuilder('https://jefrycode.com/api/', this.form))
     },
     methods: {
+        urlBuilder: function(url, params) {
+            var i, resultParams; 
+
+            if (typeof params === 'object') {
+                Object.keys(params).forEach(key => {
+                    if (url.substr(-1) == '/') {
+                        url = url.substr(0, url.length-1)
+                    }
+
+                    if (i == 1) {
+                        resultParams += '?'
+                    }
+
+                    resultParams += key + '=' + params[key]
+                    
+                    if (i < Object.keys(params).length) {
+                        resultParams += '&'
+                    }
+                    i++
+                })
+            }
+
+            return url + resultParams;
+        },
         async getLanguages() {
             const result = await this.$http.get('https://highlight-code-api.jefrydco.vercel.app/api/options')
-            this.languages = result.data.data.languages
+            this.langOptions = result.data.data.languages
+        },
+        async formSubmit(evt) {
+            evt.preventDefault()
+
+            const data = await this.$http.post(this.urlBuilder('https://highlight-code-api.jefrydco.vercel.app/api/', this.form), {
+                code: this.form.code
+
+           }).then((data) => {
+               this.responseApi = data
+           })
+        },
+        formReset(evt) {
+            evt.preventDefault()
+            this.formShow = false
+
+            this.form.lang = ''
+            this.form.fileName = ''
+            this.form.highlight = ''
+            this.form.twoslash = ''
+            this.form.download = 0
+            this.form.code = ''
+
+            this.$nextTick(() => {
+                this.formShow = true
+            })
         }
     }
 }

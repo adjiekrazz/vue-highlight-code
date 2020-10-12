@@ -14,10 +14,10 @@
                 </b-col>
             </b-row>
             <b-row class="mt-3">
-                <b-col cols="4">
+                <b-col cols="4" lg="3">
                     <menus />
                 </b-col>
-                <b-col cols="8">
+                <b-col cols="8" lg="9">
                     <child />
                 </b-col>
             </b-row>

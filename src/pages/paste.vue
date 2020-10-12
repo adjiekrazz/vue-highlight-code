@@ -1,11 +1,11 @@
 <template>
     <b-card>
         <b-row>
-            <b-col cols="12" md="6">
+            <b-col cols="12" lg="6">
                 <b-form-group label="Pilih Bahasa Pemrograman :">
                     <b-form-select
-                        v-model="userInput.selectedLanguage"
-                        :options="languages"
+                        v-model="userInput.lang"
+                        :options="langOptions"
                         size="md"
                     ></b-form-select>
                 </b-form-group>
@@ -22,16 +22,28 @@
                 </b-form-group>
             </b-col>
         </b-row>
+        <b-row>
+            <b-col cols="12" lg="6">
+                <b-button block variant="primary">
+                    Proses
+                </b-button>
+            </b-col>
+        </b-row>
     </b-card>
 </template>
 <script>
 export default {
     data: () => ({
         userInput: {
-            selectedLanguage: '',
-
+            lang: '',
+            fileName: '',
+            highlight: '',
+            twoslash: '',
+            download: 0,
+            code: ''
         },
-        languages: []
+        langOptions: [],
+        tsOptions: ['twoslash', 'tsconfig']
     }),
     mounted () {
         this.getLanguages()
@@ -39,7 +51,7 @@ export default {
     methods: {
         async getLanguages() {
             const result = await this.$http.get('https://highlight-code-api.jefrydco.vercel.app/api/options')
-            this.languages = result.data.data.languages
+            this.langOptions = result.data.data.languages
         }
     }
 }

@@ -15,7 +15,8 @@ module.exports = {
     ],
     output: {
         filename: '[name].[contenthash].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     resolve: {
         extensions: ['.js', '.vue'],
@@ -38,5 +39,8 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             }
         ]
+    },
+    devServer: {
+        historyApiFallback : true
     }
 };
