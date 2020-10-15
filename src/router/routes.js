@@ -4,5 +4,6 @@ function page (name) {
 
 export default [
     { path: '/upload', name: 'upload', component: page('upload') },
-    { path: '/paste', name: 'paste', component: page('paste') }
+    { path: '/paste', name: 'paste', component: page('paste') },
+    { path: '/login', name: 'login', comonent: page('login') }
 ]

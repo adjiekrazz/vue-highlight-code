@@ -23,6 +23,11 @@ export default {
                     icon: 'clipboard',
                     name: 'Tempel Kode',
                     route: 'paste'
+                },
+                {
+                    icon: 'key',
+                    name: 'Masuk',
+                    route: 'login'
                 }
             ]
         }

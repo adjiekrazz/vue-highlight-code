@@ -16,10 +16,9 @@
                 </b-row>
                 <b-row>
                     <b-col cols="12" lg="6">
-                        <b-form-group label="Upload file :">
+                        <b-form-group label="Nama file :">
                             <b-form-input
                                 v-model="form.fileName"
-                                :state="Boolean(form.fileName)"
                                 placeholder="contoh : index.ts"
                                 required
                             ></b-form-input>
@@ -34,14 +33,6 @@
                                 :options="tsOptions"
                                 size="md"
                             ></b-form-select>
-                        </b-form-group>
-                    </b-col>
-                </b-row>
-                <b-row>
-                    <b-col cols="12" lg="6">
-                        <b-form-group label="Unduh ?">
-                            <b-form-radio v-model="form.download" name="true" value="1">Ya</b-form-radio>
-                            <b-form-radio v-model="form.download" name="false" value="0">Tidak</b-form-radio>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -77,9 +68,11 @@
                 </b-row>
             </b-form>
         </b-card>
-        <b-card bg-variant="light" class="mt-3" v-if="responseApi.status === 200">
+        <b-card bg-variant="light" class="mt-3" >
             <b-card-text>
                 <span v-html="responseApi.data.data"></span>
+                Gambar : <br>
+                {{ responseApi }}
             </b-card-text>
         </b-card>
     </div>
@@ -88,11 +81,10 @@
 export default {
     data: () => ({
         form: {
-            lang: '',
-            fileName: '',
-            highlight: '',
+            lang: 'html',
+            fileName: 'index.html',
+            highlight: '2',
             twoslash: 'twoslash',
-            download: 0,
             code: ''
         },
         formShow: true,
@@ -101,22 +93,27 @@ export default {
         responseApi: {
             status: '',
             data: ''
-        }
+        },
     }),
     mounted () {
         this.getLanguages()
-        console.log(this.urlBuilder('https://jefrycode.com/api/', this.form))
+        console.log(this.urlBuilder('https://jefrycode.com/api/', {
+            lang : this.form.lang,
+            fileName : this.form.fileName,
+            highlight : this.form.highlight,
+            twoslash : this.form.twoslash,
+        }))
     },
     methods: {
         urlBuilder: function(url, params) {
-            var i, resultParams; 
+            var i = 1; var resultParams = ''; 
+
+            if (url.substr(-1) == '/') {
+                url = url.substr(0, url.length-1)
+            }
 
             if (typeof params === 'object') {
                 Object.keys(params).forEach(key => {
-                    if (url.substr(-1) == '/') {
-                        url = url.substr(0, url.length-1)
-                    }
-
                     if (i == 1) {
                         resultParams += '?'
                     }
@@ -138,13 +135,17 @@ export default {
         },
         async formSubmit(evt) {
             evt.preventDefault()
-
-            const data = await this.$http.post(this.urlBuilder('https://highlight-code-api.jefrydco.vercel.app/api/', this.form), {
+            this.$http.post(this.urlBuilder('https://highlight-code-api.jefrydco.vercel.app/api/', {
+                lang : this.form.lang,
+                fileName : this.form.fileName,
+                highlight : this.form.highlight,
+                twoslash : this.form.twoslash
+            }), {
                 code: this.form.code
-
-           }).then((data) => {
-               this.responseApi = data
-           })
+            }).then((response) => {
+                this.responseApi = response
+            })
+            
         },
         formReset(evt) {
             evt.preventDefault()
@@ -154,7 +155,6 @@ export default {
             this.form.fileName = ''
             this.form.highlight = ''
             this.form.twoslash = ''
-            this.form.download = 0
             this.form.code = ''
 
             this.$nextTick(() => {
