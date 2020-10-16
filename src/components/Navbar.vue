@@ -1,18 +1,22 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <b-navbar type="light" variant="light" toggleable="lg" class="navbar-style">
         <div class="container">
-            <router-link :to="'/'" class="navbar-brand">
-                Vue Highlight
-            </router-link>
+            <b-navbar-brand href="/">
+                Vue Highlight Code
+            </b-navbar-brand>
 
-            <button class="navbar-toggler border rounded p-1" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
-                <b-icon icon="justify"></b-icon>
-            </button>
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+            <b-collapse id="nav-collapse" is-nav>
+                <b-navbar-nav class="ml-auto">
+                    <b-nav-item href="https://github.com/adjiekrazz/vue-highlight-code" target="_blank">Github</b-nav-item>
+                </b-navbar-nav>
+            </b-collapse>
         </div>
-    </nav>
+    </b-navbar>
 </template>
 <script>
 export default {
-
+    name: 'Navbar'
 }
 </script>

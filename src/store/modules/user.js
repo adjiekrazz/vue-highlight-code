@@ -1,10 +1,13 @@
-import { LoaderOptionsPlugin } from 'webpack'
 import { URL_API } from '../../constants'
 import { sendData } from '../../utils'
 
 export const state = {
     userId: null,
     userName: null
+}
+
+export const getters = {
+    userId: state => state.userId,
 }
 
 export const mutations = {
@@ -21,6 +24,7 @@ export const mutations = {
 export const actions = {
     async login({ commit, dispatch }, { userName }) {
         try {
+            dispatch('loading/showLoading', null, { root: true })
             const url = `${URL_API}/user/login`
             const response = await sendData(url, {
                 name: userName
@@ -36,22 +40,25 @@ export const actions = {
                     message: 'Login Success'
                 }
 
-                await Notification.actions.showNotifications(notificationData)
+                await dispatch('notification/showNotification', notificationData, { root: true })
             } else {
                 throw new Error(response.message)
             }
         } catch (error) {
-            const notificationData = {
+            const errorNotificationData = {
                 isShow: true,
                 message: error.message
             }
 
-            Notification.actions.showNotifications(notificationData)
+            dispatch('notification/showNotification', errorNotificationData, { root: true })
             console.log(error)
+        } finally {
+            dispatch('loading/hideLoading', null, { root: true })
         }
     },
     async register({ commit, dispatch }, { userName }) {
         try {
+            dispatch('loading/showLoading', null, { root: true })
             const url = `${URL_API}/user/register`
 
             const response = await sendData(url, {
@@ -60,25 +67,27 @@ export const actions = {
 
             if (response.success & !response.error) {
                 commit('setUserData', {
-                    userId = response.data.id,
-                    userName = response.data.name
+                    userId: response.data.id,
+                    userName: response.data.name
                 })
                 const notificationData = {
                     isShow: true,
                     message: 'Register success'
                 }
 
-                await Notification.actions.showNotifications(notificationData)
+                await dispatch('notification/showNotification', notificationData, { root: true })
             } else {
                 throw new Error(response.message)
             }
         } catch (error) {
-            const notificationData = {
+            const errorNotificationData = {
                 isShow: false,
                 message: error.message
             }
-            Notification.actions.showNotifications(notificationData)
+            dispatch('notification/showNotification', errorNotificationData, { root: true })
             console.log(error)
+        } finally {
+            dispatch('loading/hideLoading', null, { root: true })
         }
     }
 }

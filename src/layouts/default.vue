@@ -3,19 +3,11 @@
         <navbar />
 
         <div class="container mt-4">
-            <b-row>
-                <b-col cols="12">
-                    <b-card>
-                        <h1>Vue Highlight Code</h1>
-                        <p>Adalah sebuah aplikasi untuk menyorot suatu baris kode dan dapat 
-                            di unduh berupa gambar (jpg).
-                        </p>
-                    </b-card>
-                </b-col>
-            </b-row>
             <b-row class="mt-3">
                 <b-col cols="4" lg="3">
                     <menus />
+                    <loading class="mt-2" />
+                    <notification class="mt-2"/>
                 </b-col>
                 <b-col cols="8" lg="9">
                     <child />
@@ -25,17 +17,20 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import Child from '~/components/Child.vue'
 import Navbar from '~/components/Navbar.vue'
 import Menus from '~/components/Menus.vue'
+import Notification from '~/components/Notification.vue'
+import Loading from '~/components/Loading.vue'
 
 export default {
     name: 'default',
     components: {
-        Child, Navbar, Menus
+        Child, Navbar, Menus, Notification, Loading
     },
-    data: () => ({
-        
+    computed: mapGetters({
+        user: 'user/userId'
     })
 }
 </script>

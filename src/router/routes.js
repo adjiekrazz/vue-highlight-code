@@ -3,7 +3,7 @@ function page (name) {
 }
 
 export default [
-    { path: '/upload', name: 'upload', component: page('upload') },
-    { path: '/paste', name: 'paste', component: page('paste') },
-    { path: '/login', name: 'login', comonent: page('login') }
+    { path: '/highlight', name: 'highlight', component: page('highlight') },
+    { path: '/listcode', name: 'listcode', component: page('listcode') },
+    { path: '/login', name: 'login', component: page('login') }
 ]

@@ -68,13 +68,7 @@
                 </b-row>
             </b-form>
         </b-card>
-        <b-card bg-variant="light" class="mt-3" >
-            <b-card-text>
-                <span v-html="responseApi.data.data"></span>
-                Gambar : <br>
-                {{ responseApi }}
-            </b-card-text>
-        </b-card>
+        <span v-html="responseApi.data.data"></span>
     </div>
 </template>
 <script>

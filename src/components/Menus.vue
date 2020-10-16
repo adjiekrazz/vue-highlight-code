@@ -15,19 +15,14 @@ export default {
         menus () {
             return [
                 {
-                    icon: 'upload',
-                    name: 'Unggah Kode',
-                    route: 'upload'
+                    icon: 'star',
+                    name: 'Sorot Kode',
+                    route: 'highlight'
                 },
                 {
-                    icon: 'clipboard',
-                    name: 'Tempel Kode',
-                    route: 'paste'
-                },
-                {
-                    icon: 'key',
-                    name: 'Masuk',
-                    route: 'login'
+                    icon: 'file-earmark-code',
+                    name: 'Kode Tersimpan',
+                    route: 'listcode'
                 }
             ]
         }

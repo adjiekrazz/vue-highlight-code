@@ -3,6 +3,11 @@ export const state = {
     message: null
 }
 
+export const getters = {
+    isShow: state => state.isShow,
+    message: state => state.message
+}
+
 export const mutations = {
     setNotification(state, { isShow, message }) {
         state.isShow = isShow
