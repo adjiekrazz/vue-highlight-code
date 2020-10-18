@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <b-card>
-            <b-form @submit.stop.prevent @reset="formReset" v-if="formShow" ref="form">
+            <b-form @submit.stop.prevent ref="form">
                 <b-row>
                     <b-col md="3">
                         <b-form-group label="Pilih Bahasa :">
@@ -74,13 +74,12 @@ import { mapGetters } from 'vuex'
 export default {
     data: () => ({
         form: {
-            lang: 'html',
-            fileName: 'index.html',
-            highlight: '2',
+            lang: '',
+            fileName: '',
+            highlight: '',
             twoslash: 'twoslash',
             code: ''
         },
-        formShow: true,
         langOptions: [],
         tsOptions: ['twoslash', 'tsconfig'],
         responseHighlight: ''

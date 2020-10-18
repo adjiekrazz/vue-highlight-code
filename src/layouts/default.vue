@@ -37,7 +37,7 @@ import Loading from '~/components/Loading.vue'
 export default {
     name: 'default',
     components: {
-        Child, Navbar, Menus, Notification, Loading, Userinfo
+        Child, Navbar, Menus, Notification, Loading
     },
     computed: mapGetters({
         userId: 'user/userId',
