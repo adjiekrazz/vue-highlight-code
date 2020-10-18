@@ -9,6 +9,12 @@
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto">
+                    <b-nav-item-dropdown>
+                        <template v-slot:button-content>
+                            <em>{{ userName }}</em>
+                        </template>
+                        <b-dropdown-item href="#" v-on:click="logout()">Keluar</b-dropdown-item>
+                    </b-nav-item-dropdown>
                     <b-nav-item href="https://github.com/adjiekrazz/vue-highlight-code" target="_blank">Github</b-nav-item>
                 </b-navbar-nav>
             </b-collapse>
@@ -16,7 +22,17 @@
     </b-navbar>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
-    name: 'Navbar'
+    name: 'Navbar',
+    computed: mapGetters({
+        userName: 'user/userName'
+    }),
+    methods: {
+        async logout() {
+            await this.$store.dispatch('user/logout')
+            this.$router.push('/')
+        }
+    }
 }
 </script>

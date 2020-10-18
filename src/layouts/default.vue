@@ -12,9 +12,6 @@
                 <b-col>
                     <notification />
                 </b-col>
-                <b-col md="4">
-                    <userinfo class="text-right"/>
-                </b-col>
             </b-row>
             <b-row class="mt-2">
                 <b-col>
@@ -36,7 +33,6 @@ import Navbar from '~/components/Navbar.vue'
 import Menus from '~/components/Menus.vue'
 import Notification from '~/components/Notification.vue'
 import Loading from '~/components/Loading.vue'
-import Userinfo from '~/components/User.vue'
 
 export default {
     name: 'default',
@@ -44,7 +40,8 @@ export default {
         Child, Navbar, Menus, Notification, Loading, Userinfo
     },
     computed: mapGetters({
-        user: 'user/userId'
+        userId: 'user/userId',
+        userName: 'user/userName'
     })
 }
 </script>
