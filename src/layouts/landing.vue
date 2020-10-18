@@ -28,7 +28,7 @@
                                     <b-button variant="primary" block @click="formSubmit">{{ formActive }}</b-button>
                                 </div>
                                 <div class="dim text-center">
-                                    <span>Belum punya akun ?</span>
+                                    <span>{{ questionText }}</span>
                                 </div>
                                 <div class="dim">
                                     <b-button variant="outline-light" block @click="registerOrLogin">{{ secondButton }}</b-button>
@@ -56,15 +56,18 @@ export default {
                 userName: ''
             },
             formActive: 'Masuk',
-            secondButton: 'Daftar'
+            secondButton: 'Daftar',
+            questionText: 'Belum Punya Akun ?'
         }
     },
     watch: {
         formActive: function() {
             if (this.formActive == 'Masuk') {
                 this.secondButton = 'Daftar'
+                this.questionText = 'Belum Punya Akun ?'
             } else {
                 this.secondButton = 'Masuk'
+                this.questionText = 'Sudah Punya Akun ?'
             }
         }
     },
@@ -77,7 +80,9 @@ export default {
             }
         },
         formSubmit() {
-            
+            this.$store.dispatch('user/login', {
+                userName: this.form.userName
+            })
         }
     }
 }

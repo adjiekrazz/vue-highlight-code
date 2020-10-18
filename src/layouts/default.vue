@@ -4,8 +4,10 @@
 
         <div class="container mt-4">
             <b-row class="mt-3">
+                <menus />
+            </b-row>
+            <b-row class="mt-3">
                 <b-col cols="4" lg="3">
-                    <menus />
                     <loading class="mt-2" />
                     <notification class="mt-2"/>
                 </b-col>
