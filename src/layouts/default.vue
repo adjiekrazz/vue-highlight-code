@@ -2,20 +2,31 @@
     <div class="default-layout">
         <navbar />
 
-        <div class="container mt-4">
-            <b-row class="mt-3">
-                <menus />
-            </b-row>
-            <b-row class="mt-3">
-                <b-col cols="4" lg="3">
-                    <loading class="mt-2" />
-                    <notification class="mt-2"/>
+        <b-container class="mt-4">
+            <b-row class="mt-2">
+                <b-col>
+                    <menus />
                 </b-col>
-                <b-col cols="8" lg="9">
+            </b-row>
+            <b-row class="mt-2">
+                <b-col>
+                    <notification />
+                </b-col>
+                <b-col md="4">
+                    <userinfo class="text-right"/>
+                </b-col>
+            </b-row>
+            <b-row class="mt-2">
+                <b-col>
                     <child />
                 </b-col>
             </b-row>
-        </div>
+            <b-row class="mt-2">
+                <b-col>
+                    <loading />
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 <script>
@@ -25,11 +36,12 @@ import Navbar from '~/components/Navbar.vue'
 import Menus from '~/components/Menus.vue'
 import Notification from '~/components/Notification.vue'
 import Loading from '~/components/Loading.vue'
+import Userinfo from '~/components/User.vue'
 
 export default {
     name: 'default',
     components: {
-        Child, Navbar, Menus, Notification, Loading
+        Child, Navbar, Menus, Notification, Loading, Userinfo
     },
     computed: mapGetters({
         user: 'user/userId'

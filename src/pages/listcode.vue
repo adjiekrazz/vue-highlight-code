@@ -1,57 +1,64 @@
 <template>
     <b-card>
         <b-row>
-            <b-col cols="12" lg="6">
-                <b-form-group label="Pilih Bahasa Pemrograman :">
-                    <b-form-select
-                        v-model="userInput.lang"
-                        :options="langOptions"
-                        size="md"
-                    ></b-form-select>
-                </b-form-group>
-            </b-col>
-        </b-row>
-        <b-row>
-            <b-col cols="12">
-                <b-form-group label="Masukkan Kode :">
-                    <b-form-textarea
-                        rows="3"
-                        max-rows="3"
-                        placeholder="example : console.log('@adjiekrazz')"
-                    ></b-form-textarea>
-                </b-form-group>
-            </b-col>
-        </b-row>
-        <b-row>
-            <b-col cols="12" lg="6">
-                <b-button block variant="primary">
-                    Proses
-                </b-button>
+            <b-col 
+                v-for="code in codes"
+                :key="code.id"
+            >
+                <div>
+                    <span v-html="code.code"></span>
+                    <b-button @click="deleteCode(code.id)" variant="danger">Hapus</b-button>
+                </div>
             </b-col>
         </b-row>
     </b-card>
 </template>
 <script>
+import { urlBuilder, sendData } from '../utils'
+import { URL_API } from '../constants'
+import { mapGetters } from 'vuex'
+
 export default {
-    data: () => ({
-        userInput: {
-            lang: '',
-            fileName: '',
-            highlight: '',
-            twoslash: '',
-            download: 0,
-            code: ''
-        },
-        langOptions: [],
-        tsOptions: ['twoslash', 'tsconfig']
+    data: () => {
+        return {
+            filter: {
+                page: 1,
+                limit: 6,
+                sortBy: 'createdAt',
+                sort: 'DESC',
+                highlighted: 1
+            }
+        }
+    },
+    computed: mapGetters({
+        codes: 'code/codes',
+        userId: 'user/userId'
     }),
     mounted () {
-        this.getLanguages()
+        this.getCodes()
     },
     methods: {
-        async getLanguages() {
-            const result = await this.$http.get('https://highlight-code-api.jefrydco.vercel.app/api/options')
-            this.langOptions = result.data.data.languages
+        async getCodes() {
+            await this.$store.dispatch('code/getAllCode', {
+                userId: this.userId,
+                filter: {
+                    page: this.filter.page,
+                    limit: this.filter.limit,
+                    sortBy: this.filter.sortBy,
+                    sort: this.filter.sort,
+                    highlighted: this.filter.highlighted
+                }
+            })
+        },
+        async deleteCode(id) {
+            const confirmation = confirm('Apakah Anda yakin ?')
+            if (confirmation) {
+                await this.$store.dispatch('code/deleteCode', {
+                    userId: this.userId,
+                    codeId: id
+                })
+            }
+            this.getCodes()
         }
     }
 }
