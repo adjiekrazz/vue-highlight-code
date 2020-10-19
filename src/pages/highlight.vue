@@ -122,7 +122,7 @@ export default {
             } catch (error) {
                 const errorNotificationData = {
                     isShow: true,
-                    message: error.message
+                    message: error.message || 'Bahasa, nama file, dan baris sorot harus diisi'
                 }
                 this.$store.dispatch('notification/showNotification', errorNotificationData)
                 console.log(error)

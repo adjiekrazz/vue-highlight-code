@@ -80,9 +80,16 @@ export default {
             }
         },
         formSubmit() {
-            this.$store.dispatch('user/login', {
-                userName: this.form.userName
-            })
+            if (this.formActive == 'Masuk') {
+                this.$store.dispatch('user/login', {
+                    userName: this.form.userName
+                })
+            } else {
+                this.$store.dispatch('user/register', {
+                    userName: this.form.userName
+                })
+            }
+            
         }
     }
 }
