@@ -17,8 +17,8 @@ export const mutations = {
         state.userName = userName
     },
     resetUserData(state) {
-        state.userId
-        state.userName
+        state.userId = null
+        state.userName = null
     }
 }
 

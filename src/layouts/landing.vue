@@ -38,17 +38,23 @@
                     </div>
                 </b-col>
             </b-row>
+            <b-row class="justify-content-md-center mt-5">
+                <loading />
+                <notification />
+            </b-row>
         </b-container>
     </div>
 </template>
 <script>
 import Child from '~/components/Child.vue'
 import Navbar from '~/components/Navbar.vue'
+import Loading from '~/components/Loading.vue'
+import Notification from '~/components/Notification.vue'
 
 export default {
     name: 'default',
     components: {
-        Child, Navbar
+        Child, Navbar, Notification, Loading
     },
     data: () => {
         return {
@@ -89,7 +95,6 @@ export default {
                     userName: this.form.userName
                 })
             }
-            
         }
     }
 }

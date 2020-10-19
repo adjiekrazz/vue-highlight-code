@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <transition name="page" mode="out-in">
-            <component :is="layout" v-if="layout" />
+            <component :is="layout" v-if="layout"/>
         </transition>
     </div>
 </template>
